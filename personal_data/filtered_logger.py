@@ -1,12 +1,12 @@
-
-gger
-"""
+#!/usr/bin/env python3
+""" encrypting """
 
 import re
 from typing import List
 import logging
 import os
-import mysql.connector
+import mysql.connector  # type: ignore
+
 
 PII_FIELDS = ('name', 'email', 'phone', 'ssn', 'password')
 
@@ -15,9 +15,7 @@ def filter_datum(fields: List[str],
                  redaction: str,
                  message: str,
                  separator: str) -> str:
-    """
-    Returns the log message obfuscated
-    """
+    """this function returns the log message obfuscated"""
     for field in fields:
         message = re.sub(field + "=.*?" + separator,
                          field + "=" + redaction + separator, message)
@@ -31,12 +29,12 @@ def get_logger() -> logging.Logger:
     logger.propagate = False
     handler = logging.StreamHandler()
     handler.setFormatter(RedactingFormatter(PII_FIELDS))
-
+    logger.addHandler(handler)
     return logger
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """connect to the database"""
+    """get db"""
     username = os.getenv("PERSONAL_DATA_DB_USERNAME")
     password = os.getenv("PERSONAL_DATA_DB_PASSWORD")
     host = os.getenv("PERSONAL_DATA_DB_HOST")
@@ -67,3 +65,23 @@ class RedactingFormatter(logging.Formatter):
         return filter_datum(self.fields, self.REDACTION,
                             super(RedactingFormatter, self).format(record),
                             self.SEPARATOR)
+
+
+def main():
+    """main def"""
+    db = get_db()
+    cursor = db.cursor()
+    logger = get_logger()
+    cursor.execute("SELECT * FROM users;")
+    for row in cursor:
+        msg = f"name={row[0]}; email={row[1]}; phone={row[2]}; \
+            ssn={row[3]}; password={row[4]}; ip={row[5]}; lat_login={row[6]}; \
+                user_agent={row[7]};"
+        logger.info(msg)
+    cursor.close()
+    db.close()
+
+
+if __name__ == "__main__":
+    main()
+    
