@@ -48,8 +48,7 @@ def get_db() -> mysql.connector.connection.MySQLConnection:
 
 
 class RedactingFormatter(logging.Formatter):
-    """ Redacting Formatter class
-        """
+    """ Redacting Formatter class """
 
     REDACTION = "***"
     FORMAT = "[HOLBERTON] %(name)s %(levelname)s %(asctime)-15s: %(message)s"
@@ -74,13 +73,14 @@ def main():
     logger = get_logger()
     cursor.execute("SELECT * FROM users;")
     for row in cursor:
-        msg = f"name={row[0]}; email={row[1]}; phone={row[2]}; \
-            ssn={row[3]}; password={row[4]}; ip={row[5]}; lat_login={row[6]}; \
-                user_agent={row[7]};"
+        msg = f"name={row[0]}; email={row[1]}; phone={row[2]}; " \
+              f"ssn={row[3]}; password={row[4]}; ip={row[5]}; " \
+              f"lat_login={row[6]}; user_agent={row[7]};"
         logger.info(msg)
     cursor.close()
     db.close()
 
 
 if __name__ == "__main__":
-    main()    
+    main()
+
