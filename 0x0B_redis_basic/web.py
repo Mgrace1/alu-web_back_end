@@ -1,35 +1,19 @@
 #!/usr/bin/env python3
-""" Tracker callls """
+""" Main file """
 
-import redis
-import requests
-from typing import Callable
-from functools import wraps
+Cache = __import__('exercise').Cache
 
-r = redis.Redis()
+cache = Cache()
 
+s1 = cache.store("first")
+print(s1)
+s2 = cache.store("secont")
+print(s2)
+s3 = cache.store("third")
+print(s3)
 
-def count_calls(method: Callable) -> Callable:
-    """ Decorator to know the number of calls """
+inputs = cache._redis.lrange("{}:inputs".format(cache.store.__qualname__), 0, -1)
+outputs = cache._redis.lrange("{}:outputs".format(cache.store.__qualname__), 0, -1)
 
-    @wraps(method)
-    def wrapper(url):
-        """ Wrapper decorator """
-        r.incr(f"count:{url}")
-        cached_html = r.get(f"cached:{url}")
-        if cached_html:
-            return cached_html.decode('utf-8')
-
-        html = method(url)
-        r.setex(f"cached:{url}", 10, html)
-        return html
-
-    return wrapper
-
-
-@count_calls
-def get_page(url: str) -> str:
-    """ Get page
-    """
-    req = requests.get(url)
-    return req.text
+print("inputs: {}".format(inputs))
+print("outputs: {}".format(outputs))
