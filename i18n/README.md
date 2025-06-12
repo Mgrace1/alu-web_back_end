@@ -1,53 +1,47 @@
-# Flask i18n (internationalization)
+<p>
+<img width="260" height="170" src="https://www.flaticon.com/svg/static/icons/svg/2206/2206461.svg" align="right" >
+</p>
 
-This project demonstrates how to implement internationalization (i18n) in a Flask web application using Flask-Babel.
+# :colombia: 0x0A. i18n
 
+- Learn how to parametrize Flask templates to display different languages
+- Learn how to infer the correct locale based on URL parameters, user settings or request headers
+- Learn how to localize timestamps
 
-## Resources
+## Prerequisites
 
-- [Flask i18n tutorial](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xiii-i18n-and-l10n)
-- [pytz](https://sourceforge.net/directory/software-development/linux/)
+- All your files will be interpreted/compiled on Ubuntu 18.04 LTS using python3 `(version 3.7)`
+- All your files should end with a new line
+- A README.md file, at the root of the folder of the project, is mandatory
+- Your code should use the pycodestyle style `(version 2.5)`
+- The first line of all your files should be exactly `#!/usr/bin/env python3`
+- All your \*.py files should be executable
+- All your modules should have a documentation `(python3 -c 'print(__import__("my_module").__doc__)')`
+- All your classes should have a documentation `(python3 -c 'print(__import__("my_module").MyClass.__doc__)')`
+- All your functions and methods should have a documentation `(python3 -c 'print(__import__("my_module").my_function.__doc__)'` and `python3 -c 'print(__import__("my_module").MyClass.my_function.__doc__)')`
+- A documentation is not a simple word, it’s a real sentence explaining what’s the purpose of the module, class or method (the length of it will be verified)
+- All your functions and coroutines must be type-annotated.
 
-## Learning Objectives
+## Run
 
-1. Learn how to parametrize Flask templates to display different languages
-2. Learn how to infer the correct locale based on URL parameters, user settings or request headers
-3. Learn how to localize timestamps
+```
+$ Python3.7 ./app.py
+```
 
-## Usage
+## Files
 
-Once the ALU Web Back-End is up and running, you can perform various tasks, including:
-
-- Authenticating users
-- Managing user accounts
-- Handling API requests from the front-end
-
-For detailed information on how to use the different features, please refer to the documentation.
-
-## Contributing
-
-We welcome contributions from the community! If you would like to contribute to the ALU Web Back-End, please follow these guidelines:
-
-1. Fork the repository.
-2. Create a new branch for your feature or bug fix.
-3. Make your changes and commit them.
-4. Push your changes to your forked repository.
-5. Submit a pull request to the main repository.
-## Project Structure
-
-```plaintext
-.
-├── babel.cfg
-├── messages.pot
-├── translations
-│   ├── en
-│   │   └── LC_MESSAGES
-│   │       ├── messages.mo
-│   │       └── messages.po
-│   ├── fr
-│   │   └── LC_MESSAGES
-│   │       ├── messages.mo
-│   │       └── messages.po
-├── templates
-│   └── 3-index.html
-└── 3-app.py
+| Files            | Description                     |
+| ---------------- | ------------------------------- |
+| **0-app.py**     | Basic Flask app                 |
+| **1-app.py**     | Basic Babel setup               |
+| **2-app.py**     | Get locale from request         |
+| **3-app.py**     | Parametrize templates           |
+| **4-app.py**     | Force locale with URL parameter |
+| **5-app.py**     | Mock logging in                 |
+| **6-app.py**     | Use user locale                 |
+| **7-app.py**     | Infer appropriate time zone     |
+| **app.py**       | Display the current time        |
+| **babel.cfg**    | Configuration babel             |
+| **translations** | Translations of babel           |
+| **messages.pot** | Logs babel                      |
+| **templates**    | Templates                       |

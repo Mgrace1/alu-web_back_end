@@ -1,38 +1,40 @@
 #!/usr/bin/env python3
-"""
-Route module for the API
-"""
+""" Basic Babel setup """
 from flask import Flask, render_template, request
-from os import getenv
-from flask_babel import Babel
-
-app = Flask(__name__)
-babel = Babel(app)
+from flask_babel import Babel, _
 
 
 class Config(object):
-    """Configuration for languages and time zone"""
-    LANGUAGES = ['en', 'fr']
-    BABEL_DEFAULT_LOCALE = 'en'
+    """ Configuration Babel """
+    LANGUAGES = ["en", "fr"]
     BABEL_DEFAULT_TIMEZONE = 'UTC'
+    BABEL_DEFAULT_LOCALE = 'en'
 
 
+app = Flask(__name__, template_folder='templates')
 app.config.from_object(Config)
+babel = Babel(app)
 
 
 @babel.localeselector
 def get_locale():
-    """Selects the best matching locale from the user's browser preferences."""
+    """ Locale language
+
+        Return:
+            Best match to the language
+    """
     return request.accept_languages.best_match(app.config['LANGUAGES'])
 
 
-@app.route('/')
-def index():
-    """hello world"""
-    return render_template("3-index.html", message="Welcome to Holberton")
+@app.route('/', methods=['GET'], strict_slashes=False)
+def hello_world():
+    """ Greeting
+
+        Return:
+            Initial template html
+    """
+    return render_template('3-index.html')
 
 
 if __name__ == "__main__":
-    host = getenv("API_HOST", "0.0.0.0")
-    port = getenv("API_PORT", "5000")
-    app.run(host=host, port=port)
+    app.run(host="0.0.0.0", port="5000")
