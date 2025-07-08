@@ -1,4 +1,4 @@
-i
+
 const { expect } = require('chai');
 
 describe('Testing numbers', () => {
